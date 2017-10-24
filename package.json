@@ -1,0 +1,29 @@
+{
+  "name": "hapi-server",
+  "version": "1.0.0",
+  "description": "Hapi Server",
+  "main": "index.js",
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "boom": "^6.0.0",
+    "bucker": "^1.1.1",
+    "confidence": "^3.0.2",
+    "dotenv": "^4.0.0",
+    "hapi": "^16.6.2",
+    "joi": "^13.0.1",
+    "lodash": "^4.17.4",
+    "require-directory": "^2.1.1",
+    "to-boolean": "^1.0.0",
+    "wreck": "^10.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:kikerios/hapi-server.git"
+  },
+  "author": "@kikerios <web.lrios@gmail.com>",
+  "license": "ISC"
+}
