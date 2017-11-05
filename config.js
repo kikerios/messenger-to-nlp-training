@@ -20,6 +20,11 @@ const config = {
     options: {
       console: ToBoolean(_.defaultTo(process.env.LOGGER_DEBUG, true))
     }
+  },
+  rethinkdb: {
+    host: process.env.RETHINKDB_HOST || 'localhost',
+    dbname: process.env.RETHINKDB_DB || 'facebookdevc',
+    tables: ['pages', 'conversations', 'messages']
   }
 }
 
