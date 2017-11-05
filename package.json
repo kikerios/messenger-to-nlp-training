@@ -1,7 +1,7 @@
 {
-  "name": "hapi-server",
+  "name": "messenger-to-nlp-training",
   "version": "1.0.0",
-  "description": "Hapi Server",
+  "description": "Messenger (conversations) to NLP training",
   "main": "index.js",
   "dependencies": {
     "bluebird": "^3.5.1",
@@ -22,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com:kikerios/hapi-server.git"
+    "url": "git+ssh://git@github.com:kikerios/messenger-to-nlp-training.git"
   },
   "author": "@kikerios <web.lrios@gmail.com>",
   "license": "ISC"
