@@ -14,7 +14,7 @@ const rethinkdbHelper = require('../lib/rethinkdb-helper')().then(rethinkdb => {
   rdb = rethinkdb
 })
 
-const db =() => {
+const db = () => {
   if (!rdb)
     throw ('rethinkdb - connection')
   return rdb
@@ -22,17 +22,27 @@ const db =() => {
 
 module.exports = () => ({
   Query: {
-    getPageById(root, { id }) {
+    getPages(root) {
+      Logger.info('getPages')
       const {r, conn} = db()
       return new Promise((resolve, reject) => {
-        r.table('pages').get(id).run(conn, (err, result) => {
-          if (err) {
-            Logger.error(err)
+        r.table('pages').filter({}).run(conn, (err, results) => {
+          if (err)
             reject(err)
-          } else {
-            Logger.debug('%j', result)
+          else
+            resolve(results.toArray())
+        })
+      })
+    },
+    getPageById(root, args) {
+      Logger.info('getPageById %j', args)
+      const {r, conn} = db()
+      return new Promise((resolve, reject) => {
+        r.table('pages').get(args.id).run(conn, (err, result) => {
+          if (err)
+            reject(err)
+          else
             resolve(result)
-          }
         })
       })
     }
@@ -43,13 +53,10 @@ module.exports = () => ({
       Logger.info('createPage %j', args)
       return new Promise((resolve, reject) => {
         r.table('pages').get(args.id).replace(args).run(conn, (err, result) => {
-          if (err) {
-            Logger.error(args, err)
+          if (err)
             reject(err)
-          } else {
-            Logger.debug('%j %j', args, result)
+          else
             resolve(args)
-          }
         })
       })
 

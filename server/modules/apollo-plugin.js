@@ -1,15 +1,13 @@
 'use strict'
 
-const { apolloHapi } = require('apollo-server')
-const { makeExecutableSchema } = require('graphql-tools')
-
-const graphqlSchema = require('../qraphql/schema')
-const createResolvers = require('../qraphql/resolvers')
-
-const executableSchema = makeExecutableSchema({
-  typeDefs: [graphqlSchema],
-  resolvers: createResolvers()
-})
+const { apolloHapi } = require('apollo-server'),
+  { makeExecutableSchema } = require('graphql-tools'),
+  graphqlSchema = require('../qraphql/schema'),
+  createResolvers = require('../qraphql/resolvers'),
+  executableSchema = makeExecutableSchema({
+    typeDefs: [graphqlSchema],
+    resolvers: createResolvers()
+  })
 
 module.exports = {
   register: apolloHapi,

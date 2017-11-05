@@ -7,6 +7,7 @@ const schema = `
     token: String!
   }
   type Query {
+    getPages: [Page],
     getPageById(id: ID!): Page
   }
   type Mutation {
