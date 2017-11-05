@@ -1,30 +1,59 @@
 'use strict'
 
-// demo
-const pages = [
-  {
-    id: '260408104412145',
-    name: 'Hubot Messenger Bot',
-    token: '***'
-  }
-]
+const config = require('../../config')
 
-const resolvers = () => ({
+const Promise = require('bluebird'),
+  Logger = require('bucker').createLogger({
+    name: 'resolvers',
+    console: config.get('/logger/options/console')
+  })
+
+let rdb
+
+const rethinkdbHelper = require('../lib/rethinkdb-helper')().then(rethinkdb => {
+  rdb = rethinkdb
+})
+
+const db =() => {
+  if (!rdb)
+    throw ('rethinkdb - connection')
+  return rdb
+}
+
+module.exports = () => ({
   Query: {
     getPageById(root, { id }) {
-      for (let i = 0; i < pages.length; i++) {
-        if (pages[i].id == id) {
-          return pages[i]
-        }
-      }
+      const {r, conn} = db()
+      return new Promise((resolve, reject) => {
+        r.table('pages').get(id).run(conn, (err, result) => {
+          if (err) {
+            Logger.error(err)
+            reject(err)
+          } else {
+            Logger.debug('%j', result)
+            resolve(result)
+          }
+        })
+      })
     }
   },
   Mutation: {
     createPage(root, args) {
-      pages.push(args)
-      return args
+      const {r, conn} = db()
+      Logger.info('createPage %j', args)
+      return new Promise((resolve, reject) => {
+        r.table('pages').get(args.id).replace(args).run(conn, (err, result) => {
+          if (err) {
+            Logger.error(args, err)
+            reject(err)
+          } else {
+            Logger.debug('%j %j', args, result)
+            resolve(args)
+          }
+        })
+      })
+
     }
   }
 })
 
-module.exports = resolvers
