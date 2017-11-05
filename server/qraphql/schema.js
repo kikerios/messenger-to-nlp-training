@@ -1,6 +1,11 @@
 'use strict'
 
 const schema = `
+  input inputPage {
+    id: ID!
+    name: String!
+    token: String!
+  }
   type Page {
     id: ID!
     name: String!
@@ -11,7 +16,8 @@ const schema = `
     getPageById(id: ID!): Page
   }
   type Mutation {
-    createPage(id: ID!, name: String! token: String!): Page
+    createPage(id: ID!, name: String! token: String!): Page,
+    createPages(pages: [inputPage]): [Page]
   }
   schema {
     query: Query

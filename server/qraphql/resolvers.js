@@ -59,7 +59,29 @@ module.exports = () => ({
             resolve(args)
         })
       })
-
+    },
+    createPages(root, args) {
+      Logger.info('createPages %j', args)
+      const {r, conn} = db()
+      const res = []
+      return new Promise(resolve => {
+        return Promise.reduce(args.pages, (res, page) => {
+          return new Promise((resolve, reject) => {
+            Logger.info('createPages -> %j', page)
+            r.table('pages').get(page.id).replace(page).run(conn, (err, result) => {
+              if (err) {
+                reject(res)
+              } else {
+                res.push(page)
+                resolve(res)
+              }
+            })
+          })
+        }, res).then(results => {
+          Logger.info('createPages -> results -> %j', results)
+          resolve(results)
+        })
+      })
     }
   }
 })
