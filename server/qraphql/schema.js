@@ -6,6 +6,9 @@ const schema = `
     name: String!
     token: String!
   }
+  type Success {
+    success: Boolean
+  }
   type Page {
     id: ID!
     name: String!
@@ -17,7 +20,8 @@ const schema = `
   }
   type Mutation {
     createPage(id: ID!, name: String! token: String!): Page,
-    createPages(pages: [inputPage]): [Page]
+    createPages(pages: [inputPage]): [Page],
+    deletePageById(id: ID!): Success
   }
   schema {
     query: Query

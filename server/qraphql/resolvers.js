@@ -85,6 +85,21 @@ Mutation.createPages = (root, args) => {
   })
 }
 
+Mutation.deletePageById = (root, args) => {
+  Logger.info('deletePageById %j', args)
+  const {r, conn} = db()
+  return new Promise((resolve, reject) => {
+    r.table('pages').get(args.id).delete().run(conn, (err, result) => {
+      if (err)
+        reject(err)
+      else if (result.deleted > 0)
+        resolve({ success: true })
+      else
+        resolve({ success: false })
+    })
+  })
+}
+
 module.exports = () => ({
   Query,
   Mutation
