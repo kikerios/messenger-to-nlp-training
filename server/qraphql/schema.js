@@ -21,6 +21,7 @@ const schema = `
   type Mutation {
     createPage(id: ID!, name: String! token: String!): Page,
     createPages(pages: [inputPage]): [Page],
+    updatePageById(id: ID!, name: String token: String): Success,
     deletePageById(id: ID!): Success
   }
   schema {

@@ -85,6 +85,21 @@ Mutation.createPages = (root, args) => {
   })
 }
 
+Mutation.updatePageById = (root, args) => {
+  Logger.info('updatePageById %j', args)
+  const {r, conn} = db()
+  return new Promise((resolve, reject) => {
+    r.table('pages').get(args.id).update(args).run(conn, (err, result) => {
+      if (err)
+        reject(err)
+      else if (result.replaced > 0)
+        resolve({ success: true })
+      else
+        resolve({ success: false })
+    })
+  })
+}
+
 Mutation.deletePageById = (root, args) => {
   Logger.info('deletePageById %j', args)
   const {r, conn} = db()
